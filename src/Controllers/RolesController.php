@@ -2,7 +2,7 @@
 namespace JaguarJack\CatchAdmin\Controllers;
 
 use JaguarJack\CatchAdmin\Exceptions\FailedException;
-use JaguarJack\CatchAdmin\Requests\Admin\Roles\CreateRequest;
+use JaguarJack\CatchAdmin\Requests\Roles\CreateRequest;
 use JaguarJack\CatchAdmin\Models\AdminPermissions;
 use JaguarJack\CatchAdmin\Models\AdminRoles;
 use JaguarJack\CatchAdmin\Service\Common\TreeService;

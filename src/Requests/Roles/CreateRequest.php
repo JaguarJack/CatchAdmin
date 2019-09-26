@@ -1,6 +1,6 @@
 <?php
 
-namespace JaguarJack\CatchAdmin\Requests\Admin\Roles;
+namespace JaguarJack\CatchAdmin\Requests\Roles;
 
 use JaguarJack\CatchAdmin\Requests\FormRequest;
 

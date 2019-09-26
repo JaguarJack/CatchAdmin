@@ -1,8 +1,8 @@
 <?php
 namespace JaguarJack\CatchAdmin\Controllers;
 
-use JaguarJack\CatchAdmin\Requests\Admin\AdminPermissions\CreateRequest;
-use JaguarJack\CatchAdmin\Requests\Admin\AdminPermissions\UpdateRequest;
+use JaguarJack\CatchAdmin\Requests\AdminPermissions\CreateRequest;
+use JaguarJack\CatchAdmin\Requests\AdminPermissions\UpdateRequest;
 use JaguarJack\CatchAdmin\Models\AdminPermissions;
 use JaguarJack\CatchAdmin\Service\Common\TreeService;
 use Illuminate\Http\Request;

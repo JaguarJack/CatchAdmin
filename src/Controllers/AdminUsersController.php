@@ -2,8 +2,8 @@
 namespace JaguarJack\CatchAdmin\Controllers;
 
 use JaguarJack\CatchAdmin\Exceptions\FailedException;
-use JaguarJack\CatchAdmin\Requests\Admin\AdminUsers\UpdateRequest;
-use JaguarJack\CatchAdmin\Requests\Admin\AdminUsers\CreateRequest;
+use JaguarJack\CatchAdmin\Requests\AdminUsers\UpdateRequest;
+use JaguarJack\CatchAdmin\Requests\AdminUsers\CreateRequest;
 use JaguarJack\CatchAdmin\Models\AdminUsers;
 use Illuminate\Http\Request;
 
