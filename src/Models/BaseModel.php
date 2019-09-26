@@ -19,6 +19,8 @@ abstract class BaseModel extends Model
     public function __construct(array $attributes = [])
     {
         parent::__construct($attributes);
+
+        $this->initModelAttribute();
     }
 
     /**
@@ -36,21 +38,22 @@ abstract class BaseModel extends Model
        }
     }
 
-
+    /**
+     * 模型属性初始化
+     *
+     * @time 2019年09月26日
+     * @return void
+     */
     protected function initModelAttribute()
     {
-        $modelSetting = config('catchAdmin');
+        $modelSetting = config('catchAdmin.model');
 
-        /**
-         * unix 时间戳设置
-         */
+        // 时间戳设置
         if ($modelSetting['unix_timestamp']) {
             $this->dateFormat = 'U';
         }
 
-        /**
-         * 分页设置
-         */
+        // 分页设置
         $this->limit = $modelSetting['page_limit'];
     }
 }

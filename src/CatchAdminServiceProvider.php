@@ -2,6 +2,7 @@
 namespace JaguarJack\CatchAdmin;
 
 use Illuminate\Support\ServiceProvider;
+use JaguarJack\CatchAdmin\Console\BackupDatabase;
 
 class CatchAdminServiceProvider extends ServiceProvider
 {
@@ -15,7 +16,11 @@ class CatchAdminServiceProvider extends ServiceProvider
     {
         $this->loadApiRoute();
 
-        $this->registerExceptionHandle();
+        $this->publishConfig();
+
+        $this->mergeAuth();
+
+        $this->registerConsole();
     }
 
     /**
@@ -25,9 +30,7 @@ class CatchAdminServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        $this->publishConfig();
-
-        $this->mergeAuth();
+        $this->registerExceptionHandle();
     }
 
     /**
@@ -56,7 +59,7 @@ class CatchAdminServiceProvider extends ServiceProvider
 
         $this->publishes([
             $uploadConfig => config_path('upload.php'),
-            $adminConfig  => config_path('catchAdmin'),
+            $adminConfig  => config_path('catchAdmin.php'),
         ]);
     }
 
@@ -87,6 +90,19 @@ class CatchAdminServiceProvider extends ServiceProvider
         $this->app->singleton(
             \Illuminate\Contracts\Debug\ExceptionHandler::class,
             \JaguarJack\CatchAdmin\Exceptions\Handler::class);
+    }
+
+    /**
+     * 注册命令
+     *
+     * @time 2019年09月26日
+     * @return void
+     */
+    public function registerConsole()
+    {
+        $this->commands([
+            BackupDatabase::class,
+        ]);
     }
 
 }

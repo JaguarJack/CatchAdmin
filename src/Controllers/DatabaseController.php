@@ -2,7 +2,10 @@
 namespace JaguarJack\CatchAdmin\Controllers;
 
 
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\DB;
+use JaguarJack\CatchAdmin\Exceptions\FailedException;
 
 class DatabaseController extends Controller
 {
@@ -32,25 +35,44 @@ class DatabaseController extends Controller
      */
     public function tableStructure($table)
     {
-        $columns = DB::getDoctrineSchemaManager()->listTableDetails($table)->getColumns();
+
+        $columns = DB::select(sprintf('show full columns from %s', $table));
 
         foreach ($columns as &$column) {
-            $type = $column->getType()->getName();
-            $column = $column->toArray();
-            $column['type'] = $type;
-
+            $column = array_change_key_case((array)$column);
         }
 
         return $this->success($columns);
     }
 
+    /**
+     * 修复表
+     *
+     * @time 2019年09月27日
+     * @return void
+     */
     public function repair()
     {
 
     }
 
-    public function backup()
+    /**
+     * 后台备份
+     *
+     * @time 2019年09月27日
+     * @param Request $request
+     * @return array
+     */
+    public function backup(Request $request)
     {
+        try {
+            $table = $request->post('table');
 
+            Artisan::call('backup:database', [$table]);
+        } catch (\Exception $exception){
+            throw new FailedException($exception->getMessage());
+        }
+
+        return $this->success();
     }
 }
