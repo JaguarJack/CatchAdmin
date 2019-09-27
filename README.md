@@ -24,5 +24,31 @@ JaguarJack\CatchAdmin\CatchAdminServiceProvider
 #### TODO
 - [ ] 
 - [ ] 
-- [ ] 
+- [ ]
 
+#### 后台命令
+安装
+```bash
+php artisan catchAdmin:install
+``` 
+卸载
+```bash
+php artisan catchAdmin:uninstall
+```
+发布 Migration
+```bash
+php artisan vendor:publish --tag=catchMigration
+```
+发布 Seed
+```bash
+php artisan vendor:push --tag=catchSeed
+```
+执行 Migration
+```bash
+php artisan migrate --path=--path=database/migrations/catchAdmin/
+```
+填充
+```bash
+php artisan db:seed --class=CatchAdminSeeder
+```
+> ps: 这个命令之前需要执行 composer dump-autoload
