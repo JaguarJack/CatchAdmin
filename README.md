@@ -21,6 +21,7 @@ JaguarJack\CatchAdmin\CatchAdminServiceProvider
 - [x] 权限管理
 - [x] Database 管理
 - [x] 操作日志
+- [x] 后台的安装 & 卸载
 #### TODO
 - [ ] 
 - [ ] 
