@@ -82,7 +82,12 @@ class BackupDatabase
      */
     protected function sqlFormat($handle, $data)
     {
-        $insertSql = sprintf('INSERT INTO `%s` VALUE (%s)' . "\r\n", $this->table, trim(implode(',', $data), ','));
+        $values = '';
+        foreach ($data as $value) {
+            $values .= sprintf("'%s'", $value) . ',';
+        }
+
+        $insertSql = sprintf('INSERT INTO `%s` VALUE (%s);' . "\r\n", $this->table, rtrim($values, ','));
 
         fwrite($handle, $insertSql, strlen($insertSql));
     }
@@ -105,7 +110,7 @@ class BackupDatabase
 
                 $this->table = $table;
             }
-        })->cursor()->each(function ($item, $key) use ($format, $handle){
+        })->cursor()->each(function ( $item, $key) use ($format, $handle){
                 $this->{$format.'Format'}($handle, $item->toArray());
         });
     }
@@ -123,5 +128,11 @@ class BackupDatabase
                 throw new \RuntimeException(sprintf('Directory "%s" was not created', $this->backPath));
             }
         }
+    }
+
+
+    protected function zip()
+    {
+        new \ZipArchive();
     }
 }

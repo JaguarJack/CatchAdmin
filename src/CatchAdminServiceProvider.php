@@ -3,6 +3,9 @@ namespace JaguarJack\CatchAdmin;
 
 use Illuminate\Support\ServiceProvider;
 use JaguarJack\CatchAdmin\Console\BackupDatabase;
+use JaguarJack\CatchAdmin\Console\CatchAdminInstall;
+use JaguarJack\CatchAdmin\Console\CatchAdminSeeder;
+use JaguarJack\CatchAdmin\Console\CatchAdminUninstall;
 
 class CatchAdminServiceProvider extends ServiceProvider
 {
@@ -16,7 +19,7 @@ class CatchAdminServiceProvider extends ServiceProvider
     {
         $this->loadApiRoute();
 
-        $this->publishConfig();
+        $this->publish();
 
         $this->mergeAuth();
 
@@ -52,15 +55,29 @@ class CatchAdminServiceProvider extends ServiceProvider
      * @time 2019年09月25日
      * @return void
      */
-    public function publishConfig()
+    public function publish()
     {
         $uploadConfig = dirname(__DIR__) . DIRECTORY_SEPARATOR . 'config' . DIRECTORY_SEPARATOR . 'upload.php';
         $adminConfig = dirname(__DIR__) . DIRECTORY_SEPARATOR . 'config' . DIRECTORY_SEPARATOR . 'catchAdmin.php';
 
+        // 发布配置
         $this->publishes([
             $uploadConfig => config_path('upload.php'),
             $adminConfig  => config_path('catchAdmin.php'),
-        ]);
+        ], 'catchConfig');
+
+        // 发布 migration
+        $this->publishes([
+            dirname(__DIR__) .DIRECTORY_SEPARATOR. 'database' . DIRECTORY_SEPARATOR . 'migrations' =>
+            base_path('database'. DIRECTORY_SEPARATOR . 'migrations' . DIRECTORY_SEPARATOR . 'catchAdmin'),
+        ], 'catchMigration');
+
+        // 发布 seed
+        $this->publishes([
+            dirname(__DIR__).DIRECTORY_SEPARATOR.'database'.DIRECTORY_SEPARATOR.'seed' =>
+            base_path('database'.DIRECTORY_SEPARATOR.'seeds'.DIRECTORY_SEPARATOR.'catchAdmin')
+        ], 'catchSeed');
+
     }
 
     /**
@@ -92,6 +109,7 @@ class CatchAdminServiceProvider extends ServiceProvider
             \JaguarJack\CatchAdmin\Exceptions\Handler::class);
     }
 
+
     /**
      * 注册命令
      *
@@ -102,6 +120,8 @@ class CatchAdminServiceProvider extends ServiceProvider
     {
         $this->commands([
             BackupDatabase::class,
+            CatchAdminInstall::class,
+            CatchAdminUninstall::class,
         ]);
     }
 

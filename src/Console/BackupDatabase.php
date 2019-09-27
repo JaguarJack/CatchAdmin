@@ -11,7 +11,7 @@ class BackupDatabase extends Command
      *
      * @var string
      */
-    protected $signature = 'backup:database {table}';
+    protected $signature = 'backup:database {table --zip=no}';
 
     /**
      * The console command description.
@@ -47,5 +47,4 @@ class BackupDatabase extends Command
 
         $backupDatabaseService->generator($tables);
     }
-
 }
