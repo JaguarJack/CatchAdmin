@@ -86,4 +86,9 @@ class Handler extends ExceptionHandler
 
        // return $jsonResponse;
     }
+
+    protected function errorFormat()
+    {
+
+    }
 }
