@@ -23,8 +23,7 @@ class Permissions extends Migration
             $table->string('route')->comment('路由名称');
             $table->string('method')->comment('HTTP METHOD');
             $table->string('path')->comment('前端使用的路由路径');
-            $table->unsignedInteger('created_at')->default(0)->comment('创建时间');
-            $table->unsignedInteger('updated_at')->default(0)->comment('更新时间');
+            createTableTimestamps($table);
         });
     }
 

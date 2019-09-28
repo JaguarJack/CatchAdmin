@@ -38,11 +38,19 @@ class CatchAdminUninstall extends Command
      */
     public function handle()
     {
-        $this->uninstallConfig();
+        $answser = $this->ask('删除配置文件? [yes/no]');
 
-        $this->uninstallMigrations();
+        if (strtolower($answser) === 'yes') {
+            $this->uninstallConfig();
+        }
 
-        $this->uninstallSeed();
+        $answser = $this->ask('删除表以及数据填充?[yes/no]');
+
+        if (strtolower($answser) === 'yes') {
+            $this->uninstallMigrations();
+
+            $this->uninstallSeed();
+        }
     }
 
     /**

@@ -22,8 +22,7 @@ class AdminUsers extends Migration
             $table->string('email')->unique();
             $table->string('password');
             $table->rememberToken();
-            $table->unsignedInteger('created_at')->default(0)->comment('创建时间');
-            $table->unsignedInteger('updated_at')->default(0)->comment('更新时间');
+            createTableTimestamps($table);
         });
     }
 
