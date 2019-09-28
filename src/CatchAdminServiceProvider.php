@@ -1,10 +1,10 @@
 <?php
 namespace JaguarJack\CatchAdmin;
 
+use App\Http\Kernel;
 use Illuminate\Support\ServiceProvider;
 use JaguarJack\CatchAdmin\Console\BackupDatabase;
 use JaguarJack\CatchAdmin\Console\CatchAdminInstall;
-use JaguarJack\CatchAdmin\Console\CatchAdminSeeder;
 use JaguarJack\CatchAdmin\Console\CatchAdminUninstall;
 
 class CatchAdminServiceProvider extends ServiceProvider
@@ -12,7 +12,8 @@ class CatchAdminServiceProvider extends ServiceProvider
 
     /**
      *
-     * @time 2019年09月25日
+     * @time 2019年09月28日
+     * @throws \Illuminate\Contracts\Container\BindingResolutionException
      * @return void
      */
     public function boot()
@@ -24,6 +25,8 @@ class CatchAdminServiceProvider extends ServiceProvider
         $this->mergeAuth();
 
         $this->registerConsole();
+
+        $this->registerMiddleware();
     }
 
     /**
@@ -42,7 +45,7 @@ class CatchAdminServiceProvider extends ServiceProvider
      * @time 2019年09月25日
      * @return void
      */
-    public function loadApiRoute()
+    protected function loadApiRoute()
     {
         $routePath = dirname(__DIR__) . DIRECTORY_SEPARATOR . 'routes' . DIRECTORY_SEPARATOR . 'admin.php';
 
@@ -55,7 +58,7 @@ class CatchAdminServiceProvider extends ServiceProvider
      * @time 2019年09月25日
      * @return void
      */
-    public function publish()
+    protected function publish()
     {
         $uploadConfig = dirname(__DIR__) . DIRECTORY_SEPARATOR . 'config' . DIRECTORY_SEPARATOR . 'upload.php';
         $adminConfig = dirname(__DIR__) . DIRECTORY_SEPARATOR . 'config' . DIRECTORY_SEPARATOR . 'catchAdmin.php';
@@ -86,7 +89,7 @@ class CatchAdminServiceProvider extends ServiceProvider
      * @time 2019年09月26日
      * @return void
      */
-    public function mergeAuth()
+    protected function mergeAuth()
     {
         $authConfig = dirname(__DIR__) . DIRECTORY_SEPARATOR . 'config' . DIRECTORY_SEPARATOR . 'auth.php';
 
@@ -102,7 +105,7 @@ class CatchAdminServiceProvider extends ServiceProvider
      * @time 2019年09月25日
      * @return void
      */
-    public function registerExceptionHandle()
+    protected function registerExceptionHandle()
     {
         $this->app->singleton(
             \Illuminate\Contracts\Debug\ExceptionHandler::class,
@@ -116,13 +119,35 @@ class CatchAdminServiceProvider extends ServiceProvider
      * @time 2019年09月26日
      * @return void
      */
-    public function registerConsole()
+    protected function registerConsole()
     {
         $this->commands([
             BackupDatabase::class,
             CatchAdminInstall::class,
             CatchAdminUninstall::class,
         ]);
+    }
+
+    /**
+     * 注册中间件
+     *
+     * @time 2019年09月28日
+     * @throws \Illuminate\Contracts\Container\BindingResolutionException
+     * @return void
+     */
+    protected function registerMiddleware()
+    {
+        $middleware = config('catchAdmin.middleware');
+
+        $router = $this->app['router'];
+
+        foreach ($middleware['route'] as $alias => $m) {
+            $router->aliasMiddleware($alias, $m);
+        }
+
+        $this->app->extend(Kernel::class, function ($service) use ($middleware) {
+            return $service->prependMiddleware($middleware['catch.admin.cors']);
+        });
     }
 
 }

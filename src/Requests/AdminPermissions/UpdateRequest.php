@@ -13,14 +13,14 @@ class UpdateRequest extends FormRequest
 	   */
 	 public function rules()
 	 {
-	     $id = $this->route('admin/permissions');
+	     $id = $this->route('permission');
 
          return [
              //
-             'name'   => 'required|min:3|max:8|unique:admin_permissions,name,id,'.$id,
+             'name'   => 'required|min:3|max:8|'. sprintf('unique:admin_permissions,name,%d,id', $id),
              'route'  => $this->request->get('pid') ? 'required|regex:/[a-zA-Z]+\.[a-zA-Z]+$/|unique:admin_permissions,route' : 'sometimes',
              'method' => 'required|in:get,post,put,delete',
-             'path'   => 'required|unique:admin_permissions,path,id,'.$id,
+             'path'   => 'required|'.sprintf('unique:admin_permissions,path,%d,id', $id),
          ];
      }
     /**

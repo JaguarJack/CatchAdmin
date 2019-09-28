@@ -2,7 +2,7 @@
 
 namespace JaguarJack\CatchAdmin\Requests;
 
-use App\Exceptions\FailedException;
+use JaguarJack\CatchAdmin\Exceptions\FailedException;
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest as BaseRequest;
 

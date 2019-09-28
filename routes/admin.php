@@ -25,8 +25,8 @@ Route::namespace('JaguarJack\\CatchAdmin\\Controllers')->prefix('api/v1')->group
  */
 Route::namespace('JaguarJack\\CatchAdmin\\Controllers')->middleware([
     'api',
-    'check.auth:admin',
-    'check.permission'
+    'catch.admin.auth:admin',
+    'catch.admin.permission'
 ])->prefix('api/v1/admin')->group(function () {
     // 登录用户
     Route::get('user', 'LoginController@getUserInfo');
