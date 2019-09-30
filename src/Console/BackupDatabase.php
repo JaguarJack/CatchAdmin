@@ -13,7 +13,7 @@ class BackupDatabase extends Command
      *
      * @var string
      */
-    protected $signature = 'backup:database {table} {--format=} {--zip=no}';
+    protected $signature = 'catch:backup {table} {--format=} {--zip=no}';
 
     /**
      * The console command description.

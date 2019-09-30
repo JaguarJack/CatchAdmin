@@ -68,7 +68,7 @@ class DatabaseController extends Controller
         try {
             $table = $request->post('table');
 
-            Artisan::call('backup:database', ['table' => $table]);
+            Artisan::call('catch:backup', ['table' => $table]);
         } catch (\Exception $exception){
             throw new FailedException($exception->getMessage());
         }
