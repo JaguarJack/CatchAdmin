@@ -19,7 +19,7 @@
     },
     "autoload": {
         "psr-4": {
-            "JaguarJack\\CatchAdmin": "src/"
+            "JaguarJack\\CatchAdmin\\": "src/"
         },
         "files": [
             "src/helper.php"
