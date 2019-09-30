@@ -5,36 +5,26 @@
 ```bash
 composer require jaguarjack/catchAdmin
 ```
-
-```bash
-php artisan vendor:publish
-```
-
-会出现选择列表,请选择
-
-```php
-JaguarJack\CatchAdmin\CatchAdminServiceProvider
-```
-
 #### 完成
 - [x] 后台登录
 - [x] 权限管理
 - [x] Database 管理
 - [x] 操作日志
 - [x] 后台的安装 & 卸载
+- [x] 数据备份 & 导入
 #### TODO
-- [ ] 
+- [ ] 文章管理
 - [ ] 
 - [ ]
 
 #### 后台命令
 安装
 ```bash
-php artisan catchAdmin:install
+php artisan catch:install
 ``` 
 卸载
 ```bash
-php artisan catchAdmin:uninstall
+php artisan catch:uninstall
 ```
 发布 Migration
 ```bash
@@ -53,3 +43,11 @@ php artisan migrate --path=--path=database/migrations/catchAdmin/
 php artisan db:seed --class=CatchAdminSeeder
 ```
 > ps: 这个命令之前需要执行 composer dump-autoload
+ 备份
+ ```bash
+ php artisan catch:backup
+ ```
+ 导入
+```bash
+php artisan catch:import
+``` 
