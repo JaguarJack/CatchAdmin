@@ -43,6 +43,7 @@ php artisan migrate --path=--path=database/migrations/catchAdmin/
 php artisan db:seed --class=CatchAdminSeeder
 ```
 > ps: 这个命令之前需要执行 composer dump-autoload
+
  备份
  ```bash
  php artisan catch:backup
