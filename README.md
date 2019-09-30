@@ -3,7 +3,7 @@
 ### 安装
 
 ```bash
-composer require jaguarjack/catchAdmin
+composer require jaguarjack/catch-admin
 ```
 #### 完成
 - [x] 后台登录
