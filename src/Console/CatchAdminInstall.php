@@ -12,7 +12,7 @@ class CatchAdminInstall extends Command
      *
      * @var string
      */
-    protected $signature = 'catchAdmin:install';
+    protected $signature = 'catch:install';
 
     /**
      * The console command description.

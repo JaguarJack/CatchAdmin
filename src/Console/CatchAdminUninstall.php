@@ -12,7 +12,7 @@ class CatchAdminUninstall extends Command
      *
      * @var string
      */
-    protected $signature = 'catchAdmin:uninstall';
+    protected $signature = 'catch:uninstall';
 
     /**
      * The console command description.
