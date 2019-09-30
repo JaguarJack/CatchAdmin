@@ -11,7 +11,7 @@ class ImportData extends Command
      *
      * @var string
      */
-    protected $signature = 'catch:import {--table=} {--path=}';
+    protected $signature = 'catch:import {--table= : the table name you need import} {--path= : the path where the file is}';
 
     /**
      * The console command description.

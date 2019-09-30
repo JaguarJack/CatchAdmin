@@ -2,9 +2,7 @@
 namespace JaguarJack\CatchAdmin\Console;
 
 use Illuminate\Console\Command;
-use JaguarJack\CatchAdmin\Models\AdminUsers;
 use JaguarJack\CatchAdmin\Service\Common\BackupDatabase as Backup;
-use SebastianBergmann\CodeCoverage\Report\PHP;
 
 class BackupDatabase extends Command
 {
@@ -13,7 +11,10 @@ class BackupDatabase extends Command
      *
      * @var string
      */
-    protected $signature = 'catch:backup {table} {--format=} {--zip=no}';
+    protected $signature = 'catch:backup 
+                            {table : the table name you need backup, support multi and you need , join them} 
+                            {--format= : the format you can use [php/sql]} 
+                            {--zip=no : Whether you need compression [yes/no]}';
 
     /**
      * The console command description.
