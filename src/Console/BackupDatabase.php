@@ -2,7 +2,9 @@
 namespace JaguarJack\CatchAdmin\Console;
 
 use Illuminate\Console\Command;
+use JaguarJack\CatchAdmin\Models\AdminUsers;
 use JaguarJack\CatchAdmin\Service\Common\BackupDatabase as Backup;
+use SebastianBergmann\CodeCoverage\Report\PHP;
 
 class BackupDatabase extends Command
 {
@@ -11,7 +13,7 @@ class BackupDatabase extends Command
      *
      * @var string
      */
-    protected $signature = 'backup:database {table --zip=no}';
+    protected $signature = 'backup:database {table} {--format=} {--zip=no}';
 
     /**
      * The console command description.
@@ -37,7 +39,9 @@ class BackupDatabase extends Command
      */
     public function handle()
     {
-        ini_set('memory_limit', config('catchAdmin.backup.backup_memory'));
+        $backup = config('catchAdmin.backup');
+
+        ini_set('memory_limit', $backup['backup_memory']);
 
         $table = $this->argument('table');
 
@@ -45,6 +49,23 @@ class BackupDatabase extends Command
 
         $backupDatabaseService = new Backup();
 
-        $backupDatabaseService->generator($tables);
+        $backupDatabaseService->generator($tables, $this->getFormat(), $backup['path'] . $this->getFormat() . DIRECTORY_SEPARATOR);
+    }
+
+    /**
+     * 获取导出格式
+     *
+     * @time 2019年09月30日
+     * @return array|bool|\Illuminate\Config\Repository|mixed|string|null
+     */
+    protected function getFormat()
+    {
+        $format = $this->option('format');
+
+        if (!$format) {
+            $format = config('catchAdmin.backup.format');
+        }
+
+        return $format;
     }
 }

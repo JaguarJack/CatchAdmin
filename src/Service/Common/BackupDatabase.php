@@ -2,6 +2,7 @@
 namespace JaguarJack\CatchAdmin\Service\Common;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Config;
 
 class BackupDatabase
 {
@@ -10,22 +11,21 @@ class BackupDatabase
     protected $backPath;
 
     /**
-     * 生成
      *
-     * @time 2019年09月27日
+     * @time 2019年09月30日
      * @param $tables
+     * @param $format
+     * @param $path
      * @return void
      */
-    public function generator($tables)
+    public function generator($tables, $format, $path)
     {
-        $backup = config('catchAdmin.backup');
-
-        $this->backPath = $backup['path'] . $backup['format'] . DIRECTORY_SEPARATOR;
+        $this->backPath = $path;
 
         foreach ($tables as $table) {
             $this->table = $table;
 
-            $this->createDataFile($backup['format']);
+            $this->createDataFile($format);
         }
     }
 
@@ -45,9 +45,8 @@ class BackupDatabase
         $handle = fopen($file, 'wb+');
 
         if ($format === 'php') {
-            fwrite($handle, $begin = "<?php \r\n return array(\r\n", \strlen($begin));
+            fwrite($handle, $begin = "BEGIN\r\n", strlen($begin));
             $this->createClass($this->table, $format, $handle);
-            fwrite($handle, $end = "\r\n );", \strlen($end));
         } else {
             fwrite($handle, $begin = "BEGIN;\r\n", \strlen($begin));
             $this->createClass($this->table, $format, $handle);
@@ -55,41 +54,6 @@ class BackupDatabase
         }
 
         fclose($handle);
-    }
-
-    /**
-     * 数组为难格式
-     *
-     * @time 2019年09月27日
-     * @param $handle
-     * @param $data
-     * @return void
-     */
-    protected function phpFormat($handle, $data)
-    {
-        $data = var_export($data, true) . ',';
-
-        fwrite($handle, $data, strlen($data));
-    }
-
-    /**
-     * sql 文件格式
-     *
-     * @time 2019年09月27日
-     * @param $handle
-     * @param $data
-     * @return void
-     */
-    protected function sqlFormat($handle, $data)
-    {
-        $values = '';
-        foreach ($data as $value) {
-            $values .= sprintf("'%s'", $value) . ',';
-        }
-
-        $insertSql = sprintf('INSERT INTO `%s` VALUE (%s);' . "\r\n", $this->table, rtrim($values, ','));
-
-        fwrite($handle, $insertSql, strlen($insertSql));
     }
 
     /**
@@ -103,16 +67,99 @@ class BackupDatabase
      */
     protected function createClass($table, $format, $handle)
     {
-        (new class($table) extends Model {
+        $this->setUnbuffered();
+
+        // 防止 IO 多次写入
+        $buffer = [];
+
+        $model = (new class($table) extends Model{
             public function __construct($table, array $attributes = [])
             {
                 parent::__construct($attributes);
 
                 $this->table = $table;
             }
-        })->cursor()->each(function ( $item, $key) use ($format, $handle){
-                $this->{$format.'Format'}($handle, $item->toArray());
         });
+        // 记录中记录
+        $total = $model->count();
+        // 生成器减少内存
+        $model->cursor()->each(function ($item, $key) use ($format, $handle, &$buffer, $total){
+            $buffer[] = $item;
+            // 末尾直接返回
+            if (($key + 1) === $total) {
+                $this->{$format . 'Format'}($handle, $this->toArray($buffer));
+                // 初始化
+                $buffer = [];
+            } else if (count($buffer) >= 1500){
+                $this->{$format . 'Format'}($handle, $this->toArray($buffer));
+                // 初始化
+                $buffer = [];
+            }
+        });
+    }
+
+    /**
+     * 数组为难格式
+     *
+     * @time 2019年09月27日
+     * @param $handle
+     * @param $data
+     * @return void
+     */
+    protected function phpFormat($handle, $data)
+    {
+        $lineData = base64_encode(serialize($data)) . "\r\n";
+
+        fwrite($handle, $lineData, strlen($lineData));
+    }
+
+    /**
+     * sql 文件格式
+     *
+     * @time 2019年09月27日
+     * @param $handle
+     * @param $data
+     * @return void
+     */
+    protected function sqlFormat($handle, $datas)
+    {
+        $values = '';
+        $sql = '';
+        foreach ($datas as $data) {
+            foreach ($data as $value) {
+                $values .= sprintf("'%s'", $value) . ',';
+            }
+
+            $sql .= sprintf('INSERT INTO `%s` VALUE (%s);' . "\r\n", $this->table, rtrim($values, ','));
+            $values = '';
+        }
+
+        fwrite($handle, $sql, strlen($sql));
+    }
+
+    /**
+     * 转换成数组格式
+     *
+     * @time 2019年09月30日
+     * @param $data
+     * @return mixed
+     */
+    protected function toArray($data)
+    {
+        return json_decode(json_encode($data, true));
+    }
+
+    /**
+     * 设置未缓存模式
+     *
+     * @time 2019年09月29日
+     * @return void
+     */
+    protected function setUnbuffered()
+    {
+         Config::set('database.connections.mysql.options', [
+           \PDO::MYSQL_ATTR_USE_BUFFERED_QUERY => false
+        ]);
     }
 
     /**

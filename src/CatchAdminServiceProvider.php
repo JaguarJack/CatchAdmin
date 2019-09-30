@@ -6,6 +6,7 @@ use Illuminate\Support\ServiceProvider;
 use JaguarJack\CatchAdmin\Console\BackupDatabase;
 use JaguarJack\CatchAdmin\Console\CatchAdminInstall;
 use JaguarJack\CatchAdmin\Console\CatchAdminUninstall;
+use JaguarJack\CatchAdmin\Console\ImportData;
 
 class CatchAdminServiceProvider extends ServiceProvider
 {
@@ -125,6 +126,7 @@ class CatchAdminServiceProvider extends ServiceProvider
             BackupDatabase::class,
             CatchAdminInstall::class,
             CatchAdminUninstall::class,
+            ImportData::class,
         ]);
     }
 

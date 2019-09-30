@@ -18,7 +18,7 @@ class Articles extends Migration
             $table->increments('id');
             $table->smallInteger('category_id')->nullable(false)->comment('分类ID');
             $table->string('title')->nullable(false)->comment('文章标题');
-            $table->text('content')->default(false)->comment('分类名称');
+            $table->text('content')->nullable(false)->comment('文章内容');
             $table->string('author')->default('')->comment('作者');
             $table->string('thumb_img')->default('')->comment('缩略图');
             $table->integer('pv')->default(0)->comment('默认的PV数量');
@@ -27,7 +27,7 @@ class Articles extends Migration
             $table->softDeletes();
         });
 
-        Schema::create('tags', function (Blueprint $table){
+        Schema::create('article_tags', function (Blueprint $table){
            $table->increments('id');
            $table->string('name')->nullable(false)->comment('标签名称');
            createTableTimestamps($table);
@@ -42,5 +42,7 @@ class Articles extends Migration
     public function down()
     {
         //
+        Schema::dropIfExists('article_tags');
+        Schema::dropIfExists('articles');
     }
 }
