@@ -6,7 +6,6 @@ use JaguarJack\CatchAdmin\Traits\Db\CurdTrait;
 use JaguarJack\CatchAdmin\Traits\Db\RegisterBuilderMethodTrait;
 use JaguarJack\CatchAdmin\Traits\Db\TrainsTrait;
 use JaguarJack\CatchAdmin\Traits\Permissions\HasRoles;
-use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Tymon\JWTAuth\Contracts\JWTSubject;
@@ -43,7 +42,6 @@ class AdminUsers extends Authenticatable implements JWTSubject
      */
  	public function getList($params)
     {
-
         return $this->select('id', 'name', 'avatar', 'email', 'created_at', 'updated_at')
                     ->when($params['name'] ?? false, function ($query) use ($params){
                         $query->whereLike('name', $params['name']);

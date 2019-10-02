@@ -1,4 +1,5 @@
 <?php
+
 namespace JaguarJack\CatchAdmin\Controllers;
 
 use JaguarJack\CatchAdmin\Requests\AdminPermissions\CreateRequest;
@@ -95,5 +96,30 @@ class PermissionsController extends Controller
     public function getAllPermissions()
     {
         return $this->success($this->permissions->getAll());
+    }
+
+    /**
+     * 获取路由列表
+     *
+     * @time 2019年10月01日
+     * @return array
+     */
+    public function getRouteList()
+    {
+        $routes = app('router')->getRoutes();
+        $routeList = [];
+        foreach ($routes as $route) {
+            $action = $route->getAction();
+            $namespace = $action['namespace'];
+            [$controller, $action] = explode('@', str_replace($namespace . '\\', '', $action['controller']));
+            $routeList[$namespace][$controller][] = [
+                'controller' => $controller,
+                'action'     => $action,
+                'uri'        => $route->uri(),
+                'method'     => $route->methods()[0]
+            ];
+        }
+
+        return $this->success($routeList);
     }
 }
