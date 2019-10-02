@@ -45,6 +45,7 @@ Route::namespace('JaguarJack\\CatchAdmin\\Controllers')->middleware([
 
     // 权限路由
     Route::resource('permissions', 'PermissionsController');
+    Route::get('routes', 'PermissionsController@getRouteList');
 
     // 上传
     Route::post('upload', 'UploadController@upload');
