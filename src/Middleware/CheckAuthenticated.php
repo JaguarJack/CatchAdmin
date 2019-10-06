@@ -26,7 +26,6 @@ class CheckAuthenticated
             $request->guard = $guard;
 
             $user = $request->user($guard);
-
             if (!$user) {
                 throw new AuthenticatedFailedException();
             }
