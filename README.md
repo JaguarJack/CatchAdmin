@@ -17,6 +17,14 @@ composer require jaguarjack/catch-admin
 - [ ] 
 - [ ]
 
+#### 配置
+在 `config/app.php` 加入配置
+```php
+'providers' => [
+    JaguarJack\CatchAdmin\CatchAdminServiceProvider::class,
+    Tymon\JWTAuth\Providers\LaravelServiceProvider::class,
+]
+```
 #### 后台命令
 安装
 ```bash
