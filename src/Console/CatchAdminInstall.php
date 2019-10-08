@@ -39,6 +39,12 @@ class CatchAdminInstall extends Command
     public function handle()
     {
         $this->call('vendor:publish', [
+           '--provider' => 'Tymon\JWTAuth\Providers\LaravelServiceProvider',
+        ]);
+
+        $this->call('jwt:secret');
+
+        $this->call('vendor:publish', [
             '--tag' => 'catchConfig',
             '--force' => true
         ]);
