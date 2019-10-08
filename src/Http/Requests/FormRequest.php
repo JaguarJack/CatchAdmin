@@ -1,6 +1,6 @@
 <?php
 
-namespace JaguarJack\CatchAdmin\Requests;
+namespace JaguarJack\CatchAdmin\Http\Requests;
 
 use JaguarJack\CatchAdmin\Exceptions\FailedException;
 use Illuminate\Contracts\Validation\Validator;

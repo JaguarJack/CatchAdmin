@@ -1,8 +1,8 @@
 <?php
-namespace JaguarJack\CatchAdmin\Controllers;
+namespace JaguarJack\CatchAdmin\Http\Controllers;
 
 use JaguarJack\CatchAdmin\Exceptions\FailedException;
-use JaguarJack\CatchAdmin\Requests\Roles\CreateRequest;
+use JaguarJack\CatchAdmin\Http\Requests\Roles\CreateRequest;
 use JaguarJack\CatchAdmin\Models\AdminPermissions;
 use JaguarJack\CatchAdmin\Models\AdminRoles;
 use JaguarJack\CatchAdmin\Service\Common\TreeService;

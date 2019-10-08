@@ -45,12 +45,12 @@ return [
         // 路由
         'route' => [
             // 用户认证
-            'catch.admin.auth'       => \JaguarJack\CatchAdmin\Middleware\CheckAuthenticated::class,
+            'catch.admin.auth'       => \JaguarJack\CatchAdmin\Http\Middleware\CheckAuthenticated::class,
             // 权限认证
-            'catch.admin.permission' => \JaguarJack\CatchAdmin\Middleware\CheckPermissions::class,
+            'catch.admin.permission' => \JaguarJack\CatchAdmin\Http\Middleware\CheckPermissions::class,
         ],
 
         // 跨域
-        'catch.admin.cors' => \JaguarJack\CatchAdmin\Middleware\CorsMiddleware::class
+        'catch.admin.cors' => \JaguarJack\CatchAdmin\Http\Middleware\CorsMiddleware::class
     ]
 ];

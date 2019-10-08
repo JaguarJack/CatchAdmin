@@ -1,8 +1,8 @@
 <?php
 
-namespace JaguarJack\CatchAdmin\Requests\AdminUsers;
+namespace JaguarJack\CatchAdmin\Http\Requests\AdminUsers;
 
-use JaguarJack\CatchAdmin\Requests\FormRequest;
+use JaguarJack\CatchAdmin\Http\Requests\FormRequest;
 
 class CreateRequest extends FormRequest
 {

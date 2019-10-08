@@ -1,5 +1,5 @@
 <?php
-namespace JaguarJack\CatchAdmin\Controllers;
+namespace JaguarJack\CatchAdmin\Http\Controllers;
 
 use App\Http\Kernel;
 use JaguarJack\CatchAdmin\Exceptions\LoginFailedException;

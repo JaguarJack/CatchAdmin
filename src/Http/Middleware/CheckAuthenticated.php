@@ -1,6 +1,6 @@
 <?php
 
-namespace JaguarJack\CatchAdmin\Middleware;
+namespace JaguarJack\CatchAdmin\Http\Middleware;
 
 use JaguarJack\CatchAdmin\Exceptions\AuthenticatedFailedException;
 use JaguarJack\CatchAdmin\Exceptions\FailedException;

@@ -1,6 +1,6 @@
 <?php
 
-namespace JaguarJack\CatchAdmin\Middleware;
+namespace JaguarJack\CatchAdmin\Http\Middleware;
 
 use Closure;
 use Illuminate\Support\Facades\Route;

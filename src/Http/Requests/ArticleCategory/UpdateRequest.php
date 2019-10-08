@@ -1,8 +1,8 @@
 <?php
 
-namespace JaguarJack\CatchAdmin\Requests\AdminUsers;
+namespace JaguarJack\CatchAdmin\Http\Requests\ArticleCategory;
 
-use JaguarJack\CatchAdmin\Requests\FormRequest;
+use JaguarJack\CatchAdmin\Http\Requests\FormRequest;
 
 class UpdateRequest extends FormRequest
 {
@@ -15,6 +15,7 @@ class UpdateRequest extends FormRequest
 	 {
 		 return [
 		   //
+             'name' => 'required|max:10|unique:article_category,name,'.$this->route('articleCategory').',id'
 		 ];
 	 }
 	 /**
@@ -26,6 +27,7 @@ class UpdateRequest extends FormRequest
 	 {
 		 return [
 		   //
+             'name' => '分类名称'
 		 ];
 	 }
 }

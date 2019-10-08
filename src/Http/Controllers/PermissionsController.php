@@ -1,9 +1,9 @@
 <?php
 
-namespace JaguarJack\CatchAdmin\Controllers;
+namespace JaguarJack\CatchAdmin\Http\Controllers;
 
-use JaguarJack\CatchAdmin\Requests\AdminPermissions\CreateRequest;
-use JaguarJack\CatchAdmin\Requests\AdminPermissions\UpdateRequest;
+use JaguarJack\CatchAdmin\Http\Requests\AdminPermissions\CreateRequest;
+use JaguarJack\CatchAdmin\Http\Requests\AdminPermissions\UpdateRequest;
 use JaguarJack\CatchAdmin\Models\AdminPermissions;
 use JaguarJack\CatchAdmin\Service\Common\TreeService;
 use Illuminate\Http\Request;
@@ -107,7 +107,9 @@ class PermissionsController extends Controller
     public function getRouteList()
     {
         $routes = app('router')->getRoutes();
+
         $routeList = [];
+
         foreach ($routes as $route) {
             $action = $route->getAction();
             $namespace = $action['namespace'];

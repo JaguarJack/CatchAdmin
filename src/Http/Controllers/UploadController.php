@@ -1,5 +1,5 @@
 <?php
-namespace JaguarJack\CatchAdmin\Controllers;
+namespace JaguarJack\CatchAdmin\Http\Controllers;
 
 use JaguarJack\CatchAdmin\Service\Upload\UploadService;
 use Illuminate\Http\Request;

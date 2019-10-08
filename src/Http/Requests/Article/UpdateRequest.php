@@ -1,8 +1,8 @@
 <?php
 
-namespace JaguarJack\CatchAdmin\Requests\Article;
+namespace JaguarJack\CatchAdmin\Http\Requests\Article;
 
-use JaguarJack\CatchAdmin\Requests\FormRequest;
+use JaguarJack\CatchAdmin\Http\Requests\FormRequest;
 
 class UpdateRequest extends FormRequest
 {

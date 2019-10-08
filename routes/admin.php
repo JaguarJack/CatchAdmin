@@ -16,14 +16,14 @@
  *  非认证路由
  */
 
-Route::namespace('JaguarJack\\CatchAdmin\\Controllers')->prefix('api/v1')->group(function () {
+Route::namespace('JaguarJack\\CatchAdmin\\Http\\Controllers')->prefix('api/v1')->group(function () {
     Route::post('admin/login', 'LoginController@login');
 });
 
 /**
  * 认证路由
  */
-Route::namespace('JaguarJack\\CatchAdmin\\Controllers')->middleware([
+Route::namespace('JaguarJack\\CatchAdmin\\Http\\Controllers')->middleware([
     'api',
     'catch.admin.auth:admin',
     'catch.admin.permission'

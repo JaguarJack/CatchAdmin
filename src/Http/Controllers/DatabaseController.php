@@ -1,5 +1,5 @@
 <?php
-namespace JaguarJack\CatchAdmin\Controllers;
+namespace JaguarJack\CatchAdmin\Http\Controllers;
 
 
 use Illuminate\Http\Request;

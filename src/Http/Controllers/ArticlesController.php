@@ -1,10 +1,10 @@
 <?php
-namespace JaguarJack\CatchAdmin\Controllers;
+namespace JaguarJack\CatchAdmin\Http\Controllers;
 
 use Illuminate\Http\Request;
 use JaguarJack\CatchAdmin\Models\Articles;
-use JaguarJack\CatchAdmin\Requests\Article\CreateRequest;
-use JaguarJack\CatchAdmin\Requests\Article\UpdateRequest;
+use JaguarJack\CatchAdmin\Http\Requests\Article\CreateRequest;
+use JaguarJack\CatchAdmin\Http\Requests\Article\UpdateRequest;
 
 class ArticlesController extends Controller
 {

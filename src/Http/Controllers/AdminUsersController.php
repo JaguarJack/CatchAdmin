@@ -1,9 +1,9 @@
 <?php
-namespace JaguarJack\CatchAdmin\Controllers;
+namespace JaguarJack\CatchAdmin\Http\Controllers;
 
 use JaguarJack\CatchAdmin\Exceptions\FailedException;
-use JaguarJack\CatchAdmin\Requests\AdminUsers\UpdateRequest;
-use JaguarJack\CatchAdmin\Requests\AdminUsers\CreateRequest;
+use JaguarJack\CatchAdmin\Http\Requests\AdminUsers\UpdateRequest;
+use JaguarJack\CatchAdmin\Http\Requests\AdminUsers\CreateRequest;
 use JaguarJack\CatchAdmin\Models\AdminUsers;
 use Illuminate\Http\Request;
 
