@@ -38,15 +38,15 @@ class CatchAdminUninstall extends Command
      */
     public function handle()
     {
-        $answser = $this->ask('删除配置文件? [yes/no]');
+        $answer = $this->ask('删除配置文件? [yes/no]');
 
-        if (strtolower($answser) === 'yes') {
+        if (strtolower($answer) === 'yes') {
             $this->uninstallConfig();
         }
 
-        $answser = $this->ask('删除表以及数据填充?[yes/no]');
+        $answer = $this->ask('删除表以及数据填充?[yes/no]');
 
-        if (strtolower($answser) === 'yes') {
+        if (strtolower($answer) === 'yes') {
             $this->uninstallMigrations();
 
             $this->uninstallSeed();
