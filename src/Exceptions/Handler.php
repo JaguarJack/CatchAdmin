@@ -58,16 +58,17 @@ class Handler extends ExceptionHandler
      */
     protected function convertExceptionToArray(Exception $e)
     {
+        $code = $e->getCode();
+        $message = $e->getMessage();
+
         if ($e instanceof NotFoundHttpException) {
-            return [
-                'code' => $e->getStatusCode(),
-                'message' => '路由未找到',
-            ];
+            $code = $e->getStatusCode();
+            $message = 'Route Not Found';
         }
 
         return [
-            'code'    => $e->getCode(),
-            'message' => $e->getMessage(),
+            'code'    => $code,
+            'message' => $message
         ];
     }
 
@@ -84,7 +85,7 @@ class Handler extends ExceptionHandler
 
         // $jsonResponse->setStatusCode(HttpResponse::HTTP_OK);
 
-       // return $jsonResponse;
+        // return $jsonResponse;
     }
 
     protected function errorFormat()
