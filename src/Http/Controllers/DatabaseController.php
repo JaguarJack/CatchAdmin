@@ -3,6 +3,7 @@ namespace JaguarJack\CatchAdmin\Http\Controllers;
 
 
 use Illuminate\Http\Request;
+use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\DB;
 use JaguarJack\CatchAdmin\Exceptions\FailedException;
@@ -13,9 +14,10 @@ class DatabaseController extends Controller
      * 表列表
      *
      * @time 2019年09月26日
+     * @param Request $request
      * @return array
      */
-    public function tables()
+    public function tables(Request $request)
     {
         $tables = DB::select('show table status');
 
@@ -23,7 +25,10 @@ class DatabaseController extends Controller
             $table = array_change_key_case((array)$table, CASE_LOWER);
         }
 
-        return $this->success($tables);
+        $page = $request->get('page');
+        $limit = $request->get('limit');
+
+        return $this->paginate((new LengthAwarePaginator(array_slice($tables, ($page - 1) * $limit, $limit), count($tables), 1)));
     }
 
     /**
