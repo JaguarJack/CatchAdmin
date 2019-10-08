@@ -7,6 +7,7 @@ use JaguarJack\CatchAdmin\Console\BackupDatabase;
 use JaguarJack\CatchAdmin\Console\CatchAdminInstall;
 use JaguarJack\CatchAdmin\Console\CatchAdminUninstall;
 use JaguarJack\CatchAdmin\Console\ImportData;
+use JaguarJack\CatchAdmin\Service\Common\Response;
 
 class CatchAdminServiceProvider extends ServiceProvider
 {
@@ -38,6 +39,8 @@ class CatchAdminServiceProvider extends ServiceProvider
     public function register()
     {
         $this->registerExceptionHandle();
+
+        $this->registerResponse();
     }
 
     /**
@@ -113,6 +116,18 @@ class CatchAdminServiceProvider extends ServiceProvider
             \JaguarJack\CatchAdmin\Exceptions\Handler::class);
     }
 
+    /**
+     * 注册响应
+     *
+     * @time 2019年10月08日
+     * @return void
+     */
+    protected function registerResponse()
+    {
+        $this->app->bind('catchResponse', function ($app){
+            return new Response();
+        });
+    }
 
     /**
      * 注册命令

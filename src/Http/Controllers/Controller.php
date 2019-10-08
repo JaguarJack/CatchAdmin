@@ -23,30 +23,18 @@ class Controller extends BaseController
      */
     protected function success($data = null, int $code = 20000, string  $message = 'success'): array
     {
-        return [
-            'code'    => $code,
-            'message' => $message,
-            'data'    => $data,
-        ];
+       return app('catchResponse')->success($data, $code, $message);
     }
 
     /**
      * 分页数据
      *
      * @time 2019年09月10日
-     * @param array $data
+     * @param Paginator $paginator
      * @return array
      */
-    protected function paginate(Paginator $data): array
+    protected function paginate(Paginator $paginator): array
     {
-        $data = [
-            'list'         => $data->items(),
-            'current_page' => $data->currentPage(),
-            'total'        => $data->total(),
-            'limit'        => $data->perPage(),
-            'next'         => $data->currentPage() + 1,
-        ];
-
-        return $this->success($data);
+       return app('catchResponse')->paginate($paginator);
     }
 }
