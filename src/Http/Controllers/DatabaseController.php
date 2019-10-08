@@ -28,7 +28,7 @@ class DatabaseController extends Controller
         $page = $request->get('page');
         $limit = $request->get('limit');
 
-        return $this->paginate((new LengthAwarePaginator(array_slice($tables, ($page - 1) * $limit, $limit), count($tables), 1)));
+        return $this->paginate((new LengthAwarePaginator(\array_slice($tables, ($page - 1) * $limit, $limit), \count($tables), $limit)));
     }
 
     /**
