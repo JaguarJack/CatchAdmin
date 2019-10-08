@@ -24,5 +24,12 @@
         "files": [
             "src/helper.php"
         ]
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "JaguarJack\\CatchAdmin\\CatchAdminServiceProvider"
+            ]
+        }
     }
 }
