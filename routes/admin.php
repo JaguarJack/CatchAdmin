@@ -58,6 +58,6 @@ Route::namespace('JaguarJack\\CatchAdmin\\Http\\Controllers')->middleware([
     // 获取表结构
     Route::get('tables/structure/{tableName}', 'DatabaseController@tableStructure');
     // 备份表
-    Route::post('tables/backup/{tableName}', 'DatabaseController@backup');
+    Route::post('tables/backup', 'DatabaseController@backup');
 });
 
