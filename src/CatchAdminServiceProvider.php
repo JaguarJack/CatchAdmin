@@ -163,9 +163,7 @@ class CatchAdminServiceProvider extends ServiceProvider
                 $router->aliasMiddleware($alias, $m);
             }
 
-            $this->app->extend(Kernel::class, function ($service) use ($middleware) {
-                return $service->prependMiddleware($middleware['catch.admin.cors']);
-            });
+            $this->app->make(Kernel::class)->pushMiddleware($middleware['catch.admin.cors']);
         }
     }
 
